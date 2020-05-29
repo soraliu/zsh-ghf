@@ -2,7 +2,7 @@
 
 Manage knowledge fragments by github issues
 
-# Requirements
+# Prerequisites
 
 - curl
 - [jq](https://stedolan.github.io/jq/download)
