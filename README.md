@@ -32,7 +32,7 @@ plugins=(
 
 # ~/.ghfrc
 # substitute ${user} ${token} with your own configuration
-export ZSH_GHF_API_URL=https://${user}:${token}@api.github.com/repos/soraliu
+export ZSH_GHF_API_URL=https://${user}:${token}@api.github.com/repos/${user}
 export ZSH_GHF_REPO_NAME_FRAGMENT=dev-infra
 export ZSH_GHF_REPO_NAME_LANG_LEARNING=trans
 ```
