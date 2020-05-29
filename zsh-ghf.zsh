@@ -3,6 +3,7 @@
 0=${(%):-%N}
 typeset -g ZSH_GHF_VERSION=$(<"${0:A:h}"/.version)
 typeset -g ZSH_GHF_REVISION=$(<"${0:A:h}"/.revision-hash)
+typeset -g ZSH_GHF_DEBUG=false
 
 pre-check() {
   if [[ $ZSH_GHF_API_URL == "" ]]; then
@@ -30,8 +31,6 @@ pre-check() {
   fi
 }
 
-ZSH_GHF_REPO_NAME=${ZSH_GHF_REPO_NAME_FRAGMENT}
-
 ghf() {
   set -e
   pre-check
@@ -39,9 +38,13 @@ ghf() {
   usage() {
     echo "usage:
       [-t | --tag]
-      [-c | --code]
+      [-c | --is_code [if wrap comment with \`\`\`]]
       [-h]"
   }
+
+  if [[ ${ZSH_GHF_REPO_NAME} == "" ]]; then
+    ZSH_GHF_REPO_NAME=${ZSH_GHF_REPO_NAME_FRAGMENT}
+  fi
 
   comment=
   tags=
@@ -85,6 +88,11 @@ $comment
 \`\`\`"
   fi
 
+  if [[ ${ZSH_GHF_DEBUG} == true ]]; then
+    echo api: $api
+    echo today: $today
+  fi
+
 
   # get pr number if exist
   id=$(curl -s $api | jq ".[] | select(.title == \"${today}\") | .number")
@@ -92,6 +100,10 @@ $comment
   if [[ "" == "$id" ]]; then
     # create issue
     id=$(curl -s -X POST --data '{"title": "'$today'"}' $api | jq '.number')
+  fi
+
+  if [[ ${ZSH_GHF_DEBUG} == true ]]; then
+    echo issue id: $id
   fi
 
   if [[ $tags == "" ]]; then

@@ -56,3 +56,40 @@ dict -t fruit apple
 ```bash
 tozh -t 'oral english' -t 'community' "I'v got it."
 ```
+
+## toen
+
+```bash
+toen -t 'tools' "zsh-ghf 这个插件真好用."
+```
+
+# The workflow of `Alfred`
+
+Go to [`release`](https://github.com/soraliu/zsh-ghf/releases) page to download workflow
+
+
+## Usage
+
+The usage of workflow is almost the same as cli, the only difference is that if you omit the comment, the workflow will paste from clipboard
+
+## commands (push, dict, tozh, toen)
+
+```bash
+# notice that `-c` should be the last arg when there is no `-t` arg
+push 'find . -type d -name "${dirname:-dir}"' 'find . -type f -name "${filename:-*.ts}"' -c
+push -c -t shell 'find . -type d -name "${dirname:-dir}"'
+# or you can ignore the comment, and the workflow will paste from clipboard
+push -t shell
+# or you can pass nothing to it
+push
+
+dict -t fruit apple
+# or you can ignore the comment, and the workflow will paste from clipboard
+dict -t fruit
+# or you can pass nothing to it
+dict
+```
+
+# License
+
+MIT
