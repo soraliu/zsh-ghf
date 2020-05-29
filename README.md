@@ -72,7 +72,7 @@ Go to [`release`](https://github.com/soraliu/zsh-ghf/releases) page to download 
 
 The usage of workflow is almost the same as cli, the only difference is that if you omit the comment, the workflow will paste from clipboard
 
-## commands (push, dict, tozh, toen)
+## Commands (push, dict, tozh, toen)
 
 ```bash
 # notice that `-c` should be the last arg when there is no `-t` arg
