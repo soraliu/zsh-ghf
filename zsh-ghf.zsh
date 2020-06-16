@@ -84,8 +84,7 @@ $1"
   # if is_code, wrap comment with ```
   if [[ $is_code == true ]]; then
     comment="\`\`\`
-$comment
-\`\`\`"
+$comment\`\`\`"
   fi
 
   if [[ ${ZSH_GHF_DEBUG} == true ]]; then
@@ -112,7 +111,7 @@ $comment
     body="${tags}
 ${comment}"
   fi
-  echo $(curl -s -X POST --data '{"body": '"$(jq -aRs . <<< ${body})"'}' $api/$id/comments | jq -r '.html_url')
+  echo $(curl -s -X POST --data '{"body": '"$(jq -aRs . <<< $(echo ${body}))"'}' $api/$id/comments | jq -r '.html_url')
   echo "$body"
 }
 
