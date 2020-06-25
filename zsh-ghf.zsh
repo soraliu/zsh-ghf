@@ -9,25 +9,25 @@ pre-check() {
   if [[ $ZSH_GHF_API_URL == "" ]]; then
     echo 'please configure $ZSH_GHF_API_URL in ~/.ghfrc'
     echo 'TL;DR https://github.com/soraliu/zsh-ghf'
-    exit 1
+    return 1
   fi
 
   if [[ $ZSH_GHF_REPO_NAME_FRAGMENT == "" ]]; then
     echo 'please configure $ZSH_GHF_REPO_NAME_FRAGMENT in ~/.ghfrc'
     echo 'TL;DR https://github.com/soraliu/zsh-ghf'
-    exit 1
+    return 1
   fi
 
   if ! command -v jq 1>/dev/null 2>&1; then
     echo 'please install jq'
     echo 'TL;DR https://github.com/soraliu/zsh-ghf'
-    exit 1
+    return 1
   fi
 
   if ! command -v curl 1>/dev/null 2>&1; then
     echo 'please install curl'
     echo 'TL;DR https://github.com/soraliu/zsh-ghf'
-    exit 1
+    return 1
   fi
 }
 
@@ -63,7 +63,7 @@ ghf() {
         ;;
       -h | --help )
         usage
-        exit
+        return
         ;;
       * )
         if [[ $comment == "" ]]; then
