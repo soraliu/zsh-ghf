@@ -84,7 +84,8 @@ $1"
   # if is_code, wrap comment with ```
   if [[ $is_code == true ]]; then
     comment="\`\`\`
-$comment\`\`\`"
+$comment
+\`\`\`"
   fi
 
   if [[ ${ZSH_GHF_DEBUG} == true ]]; then
