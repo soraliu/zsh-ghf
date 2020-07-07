@@ -110,6 +110,7 @@ $comment
     body="${comment}"
   else
     body="${tags}
+
 ${comment}"
   fi
   echo $(curl -s -X POST --data '{"body": '"$(jq -aRs . <<< $(echo ${body}))"'}' $api/$id/comments | jq -r '.html_url')
