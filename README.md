@@ -5,14 +5,23 @@ Manage knowledge fragments by github issues
 # Prerequisites
 
 - curl
+- zsh
 - [jq](https://stedolan.github.io/jq/download)
 - [translate-shell](https://github.com/soimort/translate-shell#installation) (optional)
 
 In osx, you can exec the following codes
 
 ```bash
+brew install zsh
 brew install jq
 brew install translate-shell
+```
+
+Make sure that you have export `/usr/local/bin`
+
+```bash
+# ~/.zshrc
+export PATH="/usr/local/bin:$PATH"
 ```
 
 # Installation
@@ -32,6 +41,7 @@ plugins=(
 
 # ~/.ghfrc
 # substitute ${user} ${token} with your own configuration
+# make sure the repo is exist
 export ZSH_GHF_API_URL=https://${user}:${token}@api.github.com/repos/${user}
 export ZSH_GHF_REPO_NAME_FRAGMENT=dev-infra
 export ZSH_GHF_REPO_NAME_LANG_LEARNING=trans
