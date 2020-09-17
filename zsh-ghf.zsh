@@ -1,6 +1,9 @@
 [[ -e ~/.ghfrc ]] && source ~/.ghfrc
 
 0=${(%):-%N}
+source ${0:A:h}/app/zsh-cache.zsh
+typeset -g ZSH_GHF_START_DAEMON="${0:A:h}"/app/zsh-start-daemon.zsh
+typeset -g ZSH_GHF_CACHE="${0:A:h}"/app/zsh-cache.zsh
 typeset -g ZSH_GHF_VERSION=$(<"${0:A:h}"/.version)
 typeset -g ZSH_GHF_REVISION=$(<"${0:A:h}"/.revision-hash)
 typeset -g ZSH_GHF_DEBUG=false
@@ -115,6 +118,11 @@ ${comment}"
   fi
   echo $(curl -s -X POST --data '{"body": '"$(jq -aRs . <<< $(echo ${body}))"'}' $api/$id/comments | jq -r '.html_url')
   echo "$body"
+
+  # refresh cache
+  issue_to_cache -r ${ZSH_GHF_REPO_NAME} -n ${id} > ${ZSH_GHF_PATH_TO_CACHE_ROOT}/${ZSH_GHF_REPO_NAME}/${today}
+  echo ${ZSH_GHF_PATH_TO_CACHE_ROOT}/${ZSH_GHF_REPO_NAME}/${today} 1>>/tmp/ghf-daemon.stdout
+  echo ${id} 1>>/tmp/ghf-daemon.stdout
 }
 
 dict() {

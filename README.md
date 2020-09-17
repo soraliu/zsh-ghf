@@ -100,6 +100,45 @@ dict -t fruit
 dict
 ```
 
+# EBFC
+
+Inspired from the Ebbinghaus forgetting curve.
+
+## Prerequisites
+
+- terminal-notifier
+
+In osx, you can exec the following codes
+
+```bash
+brew install terminal-notifier
+```
+
+## Configuration
+
+```bash
+# ~/.ghfrc
+export ZSH_GHF_PATH_TO_CACHE_ROOT=~/.ghf
+export ZSH_GHF_NOTIFICATION_SOUND=submarine
+export ZSH_GHF_DAEMON_POLLING_INTERVAL=30
+```
+
+## The workflow of `Alfred`
+
+Go to [`release`](https://github.com/soraliu/zsh-ghf/releases) page to download workflow
+
+### Usage
+
+### Commands (ghf-daemon, ghf-sync)
+
+```bash
+# Step 1. Firstly sync issues from github
+ghf-sync
+# Step 2. Start a daemon
+ghf-daemon # same as `ghf-daemon start`
+ghf-daemon stop
+```
+
 # License
 
 MIT
