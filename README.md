@@ -9,7 +9,7 @@ Manage knowledge fragments by github issues
 - [jq](https://stedolan.github.io/jq/download)
 - [translate-shell](https://github.com/soimort/translate-shell#installation) (optional)
 
-In osx, you can exec the following codes
+On OSX, you can exec the following codes
 
 ```bash
 brew install zsh
@@ -102,13 +102,13 @@ dict
 
 # EBFC
 
-Inspired from the Ebbinghaus forgetting curve.
+Inspired by the Ebbinghaus forgetting curve.
 
 ## Prerequisites
 
 - terminal-notifier
 
-In osx, you can exec the following codes
+On OSX, you can exec the following codes
 
 ```bash
 brew install terminal-notifier
