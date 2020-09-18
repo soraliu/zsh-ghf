@@ -121,6 +121,7 @@ brew install terminal-notifier
 export ZSH_GHF_PATH_TO_CACHE_ROOT=~/.ghf
 export ZSH_GHF_NOTIFICATION_SOUND=submarine
 export ZSH_GHF_DAEMON_POLLING_INTERVAL=30
+export ZSH_GHF_DAEMON_NOTIFICATION_INTERVAL=30
 ```
 
 ## The workflow of `Alfred`

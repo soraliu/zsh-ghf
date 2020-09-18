@@ -207,6 +207,8 @@ update_cache() {
       update_comment -r ${repo_name} -i ${id} -b "${new_body}"
 
       notify -t "$(echo ${tags})" -m "$(echo ${content})" -u "${html_url}"
+
+      sleep ${ZSH_GHF_DAEMON_NOTIFICATION_INTERVAL-15}
     fi
   done
 

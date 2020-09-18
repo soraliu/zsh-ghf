@@ -43,7 +43,6 @@ notify() {
 
   if type terminal-notifier 1>/dev/null; then
     terminal-notifier -title "${title:-EBFC}" -message "${message}" -open "${url}" -sound ${ZSH_GHF_NOTIFICATION_SOUND:-submarine} -appIcon https://user-images.githubusercontent.com/11631972/93462166-783cc000-f918-11ea-96dc-598c52179eae.png
-    sleep 10
   else
     echo "Please install terminal-notifier!"
     echo "\$ brew install terminal-notifier"
