@@ -131,7 +131,7 @@ dict() {
   }
 
   ZSH_GHF_REPO_NAME=${ZSH_GHF_REPO_NAME_LANG_LEARNING}
-  ghf -c $@
+  ghf -t 'language learning' -t 'english' -c $@
 }
 
 tozh() {
@@ -140,7 +140,7 @@ tozh() {
   }
 
   ZSH_GHF_REPO_NAME=${ZSH_GHF_REPO_NAME_LANG_LEARNING}
-  ghf -c $@
+  ghf -t 'language learning' -t 'english' -c $@
 }
 
 toen() {
@@ -149,7 +149,7 @@ toen() {
   }
 
   ZSH_GHF_REPO_NAME=${ZSH_GHF_REPO_NAME_LANG_LEARNING}
-  ghf -c $@
+  ghf -t 'language learning' -t 'english' -c $@
 }
 
 alias push="ghf"
