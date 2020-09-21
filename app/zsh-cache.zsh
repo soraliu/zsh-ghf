@@ -57,7 +57,7 @@ issue_to_cache() {
         # tags=[$(printf '%s' "${line}" | sed -E 's/`(.+)` /\1 /g' | sed -E 's/`(.+)`$/\1/g' | xargs -n1 printf '"%s"\n' | paste -s -d ',' -)]
         tags=[$(printf '%s' "${line}" | sed -E 's/`/"/g' | xargs -n1 printf '"%s"\n' | paste -s -d ',' -)]
       elif [[ "${line}" =~ '^<details>.*$' ]]; then
-        history_of_comment=$(printf "${body}" | awk '/^<details>.*$/,EOF {print $0}')
+        history_of_comment=$(echo "${body}" | awk '/^<details>.*$/,EOF {print $0}')
         break
       else
         content="${content}$(trim_double_quote "$(jq -aRs <<< "${line}")")"
