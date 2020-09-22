@@ -3,8 +3,6 @@
 #   terminal-notifier
 #   brew install terminal-notifier
 
-set -e
-
 # 0=${(%):-%N}
 # source ${0:A:h}/zsh-cache.zsh
 [[ -e ~/.ghfrc ]] && source ~/.ghfrc

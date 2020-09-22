@@ -1,7 +1,5 @@
 #!/bin/zsh
 
-set -e
-
 0=${(%):-%N}
 source ${0:A:h}/zsh-github-api.zsh
 source ${0:A:h}/zsh-history-operator.zsh

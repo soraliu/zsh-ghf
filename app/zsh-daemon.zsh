@@ -5,8 +5,6 @@
 # @global {String} ZSH_GHF_REPO_NAME_LANG_LEARNING
 # @param {String} repo
 
-set -e
-
 0=${(%):-%N}
 source ${0:A:h}/zsh-cache.zsh
 [[ -e ~/.ghfrc ]] && source ~/.ghfrc
