@@ -5,6 +5,8 @@ Manage knowledge fragments by github issues
 # Prerequisites
 
 - curl
+- gdate
+- pngpaste
 - zsh
 - [jq](https://stedolan.github.io/jq/download)
 - [translate-shell](https://github.com/soimort/translate-shell#installation) (optional)
@@ -15,6 +17,7 @@ On OSX, you can exec the following codes
 brew install zsh
 brew install jq
 brew install translate-shell
+brew install pngpaste
 ```
 
 Make sure that you have export `/usr/local/bin`

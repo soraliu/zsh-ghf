@@ -2,6 +2,8 @@
 
 0=${(%):-%N}
 source ${0:A:h}/app/zsh-cache.zsh
+source ${0:A:h}/app/zsh-log.zsh
+source ${0:A:h}/app/zsh-oss.zsh
 typeset -g ZSH_GHF_START_DAEMON="${0:A:h}"/app/zsh-start-daemon.zsh
 typeset -g ZSH_GHF_CACHE="${0:A:h}"/app/zsh-cache.zsh
 typeset -g ZSH_GHF_VERSION=$(<"${0:A:h}"/.version)
@@ -42,6 +44,7 @@ ghf() {
     echo "usage:
       [-t | --tag]
       [-c | --is_code [if wrap comment with \`\`\`]]
+      [-f | --is_from_clipboard]
       [-h]"
   }
 
@@ -64,6 +67,9 @@ ghf() {
       -c | --code )
         is_code=true
         ;;
+      -f | --from_clipboard )
+        is_from_clipboard=true
+        ;;
       -h | --help )
         usage
         return
@@ -84,18 +90,31 @@ $1"
     comment=$(wrapper $comment)
   fi
 
-  # if is_code, wrap comment with ```
-  if [[ $is_code == true ]]; then
-    comment="\`\`\`
-$comment
-\`\`\`"
+  if [[ $is_from_clipboard == true ]]; then
+    # 1. check if image
+    #   yes -> upload to oss & get link & assign to comment
+    #   no -> assign clipboard content to comment
+    img_temp=$(mktemp)
+    img_name="$(uuidgen).png"
+    if pngpaste "${img_temp}" 2>/dev/null; then
+      url=$(upload_file_to_aliyun_oss -s ${img_temp} -d "${img_name}")
+      comment="![img](${url})"
+    else
+      comment="$(pbpaste)"
+    fi
+    rm -f ${img_temp}
+  else
+    # if is_code, wrap comment with ```
+    if [[ $is_code == true ]]; then
+      comment="\`\`\`\n$comment\n\`\`\`"
+    fi
   fi
+
 
   if [[ ${ZSH_GHF_DEBUG} == true ]]; then
     echo api: $api
     echo today: $today
   fi
-
 
   # get pr number if exist
   id=$(curl -s $api | jq ".[] | select(.title == \"${today}\") | .number")
@@ -124,6 +143,36 @@ ${comment}"
   echo ${ZSH_GHF_PATH_TO_CACHE_ROOT}/${ZSH_GHF_REPO_NAME}/${today} 1>>/tmp/ghf-daemon.stdout
   echo ${id} 1>>/tmp/ghf-daemon.stdout
 }
+
+ghf-list() {
+  set -e
+
+  #
+  # list=$(<${ZSH_GHF_PATH_TO_CACHE_ROOT}/.list)
+  #
+  # echo ${list}
+  ghf-log -c 'call ghf-list'
+
+  if [[ -e ${ZSH_GHF_PATH_TO_CACHE_ROOT}/.list ]]; then
+    cat ${ZSH_GHF_PATH_TO_CACHE_ROOT}/.list
+
+    zsh -c '
+      source '"${0:A:h}/app/zsh-github-api.zsh"'
+      data=$(get_issue_list \
+        | jq ".[] |= {title, subtitle: .title, autocomplete: .title, arg: .html_url}" \
+        | jq "{items: .}")
+      [[ ${data} != "" ]] && echo "${data}" > ${ZSH_GHF_PATH_TO_CACHE_ROOT}/.list
+    ' &
+
+    return
+  fi
+
+  get_issue_list \
+    | jq '.[] |= {title, subtitle: .title, autocomplete: .title, arg: .html_url}' \
+    | jq '{items: .}' | tee ${ZSH_GHF_PATH_TO_CACHE_ROOT}/.list
+
+}
+
 
 dict() {
   wrapper() {

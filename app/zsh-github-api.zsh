@@ -29,6 +29,37 @@ get_all_opened_issues() {
   curl -s ${ZSH_GHF_API_URL}/${repo_name}/issues
 }
 
+get_issue_list() {
+  usage() {
+    echo "usage:
+      [--page]
+      [--per_page]
+      [-h]"
+  }
+
+  repo_name=${ZSH_GHF_REPO_NAME_FRAGMENT}
+  while [ "$1" != "" ]; do
+    case $1 in
+      --page ) shift
+        page=$1
+        ;;
+      --per_page ) shift
+        per_page=$1
+        ;;
+      -h | --help )
+        usage
+        return
+        ;;
+    esac
+    shift
+  done
+
+  page=${page:-0}
+  per_page=${per_page:-10}
+
+  curl -s "${ZSH_GHF_API_URL}/${repo_name}/issues?page=${page}&per_page=${per_page}"
+}
+
 get_issue() {
   usage() {
     echo "usage:
