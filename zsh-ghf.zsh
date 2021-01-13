@@ -95,14 +95,16 @@ $1"
     #   yes -> upload to oss & get link & assign to comment
     #   no -> assign clipboard content to comment
     img_temp=$(mktemp)
-    img_name="$(uuidgen).png"
-    if pngpaste "${img_temp}" 2>/dev/null; then
-      url=$(upload_file_to_aliyun_oss -s ${img_temp} -d "${img_name}")
+    img_name="$(uuidgen)"
+    if pngpaste "${img_temp}.png" 2>/dev/null; then
+      sips -s format jpeg "${img_temp}.png" --out "${img_temp}.jpg"
+      url=$(upload_file_to_aliyun_oss -s "${img_temp}.jpg" -d "${img_name}.jpg")
       comment="![img](${url})"
     else
       comment="$(pbpaste)"
     fi
-    rm -f ${img_temp}
+    rm -f "${img_temp}.png"
+    rm -f "${img_temp}.jpg"
   else
     # if is_code, wrap comment with ```
     if [[ $is_code == true ]]; then

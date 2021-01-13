@@ -57,7 +57,7 @@ upload_file_to_aliyun_oss() {
 
   url=http://${oss_host}/${dest}
 
-  curl -isq -X PUT -T "${src}" \
+  curl -qis -X PUT -T "${src}" \
     -H "Host: ${oss_host}" \
     -H "Date: ${date_value}" \
     -H "Content-Type: ${content_type}" \
