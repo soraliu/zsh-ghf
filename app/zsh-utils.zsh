@@ -14,6 +14,8 @@ trim_double_quote() {
   input=
 }
 
-debounce() {
-
+realpath() {
+  path=$([[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}")
+  echo ${path%/*}
 }
+

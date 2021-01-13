@@ -153,16 +153,19 @@ ghf-list() {
   # echo ${list}
   ghf-log -c 'call ghf-list'
 
+  path_to_root=$(realpath "$0")
+
   if [[ -e ${ZSH_GHF_PATH_TO_CACHE_ROOT}/.list ]]; then
     cat ${ZSH_GHF_PATH_TO_CACHE_ROOT}/.list
 
-    zsh -c '
-      source '"${0:A:h}/app/zsh-github-api.zsh"'
+    nohup zsh -c '(
+      source ~/.zshrc
       data=$(get_issue_list \
         | jq ".[] |= {title, subtitle: .title, autocomplete: .title, arg: .html_url}" \
         | jq "{items: .}")
-      [[ ${data} != "" ]] && echo "${data}" > ${ZSH_GHF_PATH_TO_CACHE_ROOT}/.list
-    ' &
+      [[ ${data} != "" ]] && (echo "${data}" > ${ZSH_GHF_PATH_TO_CACHE_ROOT}/.list)
+      ghf-log -c "[ghf-list] sync data from github"
+    )' >> /tmp/ghf-list.stdout 2>&1 &
 
     return
   fi
@@ -171,6 +174,7 @@ ghf-list() {
     | jq '.[] |= {title, subtitle: .title, autocomplete: .title, arg: .html_url}' \
     | jq '{items: .}' | tee ${ZSH_GHF_PATH_TO_CACHE_ROOT}/.list
 
+  path_to_root=
 }
 
 
