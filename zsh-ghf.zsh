@@ -97,7 +97,7 @@ $1"
     img_temp=$(mktemp)
     img_name="$(uuidgen)"
     if pngpaste "${img_temp}.png" 2>/dev/null; then
-      sips -s format jpeg "${img_temp}.png" --out "${img_temp}.jpg"
+      sips -s format jpeg "${img_temp}.png" --out "${img_temp}.jpg" 1>/dev/null 2>&1
       url=$(upload_file_to_aliyun_oss -s "${img_temp}.jpg" -d "${img_name}.jpg")
       comment="![img](${url})"
     else
