@@ -6,6 +6,7 @@ Manage knowledge fragments by github issues
 
 - curl
 - gdate
+- gawk
 - pngpaste
 - zsh
 - [jq](https://stedolan.github.io/jq/download)
@@ -18,6 +19,7 @@ brew install zsh
 brew install jq
 brew install translate-shell
 brew install pngpaste
+brew install gawk
 ```
 
 Make sure that you have export `/usr/local/bin`
@@ -51,6 +53,12 @@ export ZSH_GHF_REPO_NAME_LANG_LEARNING=trans
 ```
 
 # Usage
+
+## initialize
+
+```bash
+sync_all
+```
 
 ## push
 
@@ -137,10 +145,12 @@ Go to [`release`](https://github.com/soraliu/zsh-ghf/releases) page to download 
 
 ```bash
 # Step 1. Firstly sync issues from github
-ghf-sync
+gsync
 # Step 2. Start a daemon
-ghf-daemon # same as `ghf-daemon start`
-ghf-daemon stop
+gdaemon # same as `ghf-daemon start`
+gdaemon stop
+# List all issues
+gls
 ```
 
 # License
