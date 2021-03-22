@@ -86,10 +86,6 @@ $1"
     shift
   done
 
-  if command -v wrapper 1>/dev/null 2>&1; then
-    comment=$(wrapper $comment)
-  fi
-
   if [[ $is_from_clipboard == true ]]; then
     # 1. check if image
     #   yes -> upload to oss & get link & assign to comment
@@ -102,16 +98,27 @@ $1"
       comment="![img](${url})"
     else
       comment="$(pbpaste)"
+
+      if command -v wrapper 1>/dev/null 2>&1; then
+        comment=$(wrapper $comment)
+      fi
+
+      if [[ $is_code == true ]]; then
+        comment="\`\`\`\n$comment\n\`\`\`"
+      fi
     fi
     rm -f "${img_temp}.png"
     rm -f "${img_temp}.jpg"
   else
+    if command -v wrapper 1>/dev/null 2>&1; then
+      comment=$(wrapper $comment)
+    fi
+
     # if is_code, wrap comment with ```
     if [[ $is_code == true ]]; then
       comment="\`\`\`\n$comment\n\`\`\`"
     fi
   fi
-
 
   if [[ ${ZSH_GHF_DEBUG} == true ]]; then
     echo api: $api
